@@ -1,0 +1,40 @@
+{
+  "vpc-provider:account=118655001634:filter.isDefault=true:region=us-west-2:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-0167ed565a021ae79",
+    "vpcCidrBlock": "172.31.0.0/16",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Public",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-054c48926e65c7e6f",
+            "cidr": "172.31.16.0/20",
+            "availabilityZone": "us-west-2a",
+            "routeTableId": "rtb-07ca79dbd9f10e1df"
+          },
+          {
+            "subnetId": "subnet-0ecff9f1cd202cc54",
+            "cidr": "172.31.32.0/20",
+            "availabilityZone": "us-west-2b",
+            "routeTableId": "rtb-07ca79dbd9f10e1df"
+          },
+          {
+            "subnetId": "subnet-0ff3683b68cc13f8d",
+            "cidr": "172.31.0.0/20",
+            "availabilityZone": "us-west-2c",
+            "routeTableId": "rtb-07ca79dbd9f10e1df"
+          },
+          {
+            "subnetId": "subnet-01b1679d5321d41b1",
+            "cidr": "172.31.48.0/20",
+            "availabilityZone": "us-west-2d",
+            "routeTableId": "rtb-07ca79dbd9f10e1df"
+          }
+        ]
+      }
+    ]
+  },
+  "ami:account=118655001634:filters.image-type.0=machine:filters.name.0=ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*:filters.state.0=available:owners.0=099720109477:region=us-west-2": "ami-0ceeab680f529cc36"
+}
