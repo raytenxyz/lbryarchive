@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <title>Web Archive</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Web Archive</h1>
+    <form id="archive-form" action="/archive" method="POST">
+        <div class="form-group">
+            <label for="url">URL:</label>
+            <input type="text" class="form-control" id="url" name="url" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Archive</button>
+    </form>
+    <div id="spinner" class="my-4" style="display: none;">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div id="result"></div>
+</div>
+<script>
+    document.getElementById('archive-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const url = form.url.value;
+
+        document.getElementById('spinner').style.display = 'block';
+        document.getElementById('result').innerHTML = '';
+
+        const response = await fetch('/archive', {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(form)),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+
+        document.getElementById('spinner').style.display = 'none';
+
+        if (response.ok) {
+            const uuid = await response.text();
+            document.getElementById('result').innerHTML = `<h1>Webpage Archived</h1><p>UUID: ${uuid}</p>`;
+          } else {
+            const error = await response.text();
+            document.getElementById('result').innerHTML = `<h1>Error</h1><p>Could not archive the URL: ${error}</p>`;
+          }
+        });
+      </script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
