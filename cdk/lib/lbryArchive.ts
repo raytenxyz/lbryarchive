@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import {Tag} from 'aws-cdk-lib';
 import {Construct} from 'constructs';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as ecr from 'aws-cdk-lib/aws-ecr';
 
 export class LbryArchive extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -39,6 +40,10 @@ export class LbryArchive extends cdk.Stack {
       securityGroup: mySecurityGroup
     })
     tag.visit(myInstance)
+
+    // allow to pull image from ecr.
+    const repo = ecr.Repository.fromRepositoryName(this, "lbry-repo", "lbryarchive")
+    repo.grantPull(myInstance)
 
     // Allocate a static Elastic IP address
     const myEip = new ec2.CfnEIP(this, 'MyEIP', {tags: [tag]});

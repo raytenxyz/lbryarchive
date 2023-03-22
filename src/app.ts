@@ -26,23 +26,13 @@ app.post('/archive', async (req, res) => {
         console.log(`url:${url} downloaded to ${archive.mhtml}`)
         // Upload the archive file to LBRY
         const lbryUrl = await uploadToLBRY(archive, url);
-        // Remove the temporary archive file
-
-        for (const f of [archive.mhtml, archive.image]) {
-            await fs.unlink(f, (err) => {
-                if (err) {
-                    console.error(`Error deleting file: ${err.message}`);
-                } else {
-                    console.log(`File deleted successfully`);
-                }
-            });
-        }
 
         const claimId = lbryUrl.split('#')[1];
         const httpUrl = `http://lbry.tv/${lbryUrl.split(':')[1]}#${claimId}`;
         res.send(`<h1>Webpage Archived</h1><p>: ${httpUrl}</p><p>The Url will be ready in 10 minutes.</p>`);
     } catch (error) {
         const errorMessage = (error as Error).message;
+        console.error(error)
         res.status(500).send(`<h1>Error</h1><p>Could not archive the URL: ${errorMessage}</p>`);
     }
 });
